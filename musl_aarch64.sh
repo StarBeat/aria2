@@ -5,7 +5,7 @@ export TOOLCHAIN=/workspaces/aarch64-linux-musl-cross/bin
 export TOOLCHAIN_PREFIX=aarch64-linux-musl
 export CPP=$TOOLCHAIN/$TOOLCHAIN_PREFIX-cpp 
 export CC=$TOOLCHAIN/$TOOLCHAIN_PREFIX-gcc 
-export CXX=$TOOLCHAIN/$TOOLCHAIN_PREFIX-g++ 
+export CXX=$TOOLCHAIN/$TOOLCHAIN_PREFIX-g++
 export LD=$TOOLCHAIN/$TOOLCHAIN_PREFIX-ld 
 export AR=$TOOLCHAIN/$TOOLCHAIN_PREFIX-ar 
 export AS=$TOOLCHAIN/$TOOLCHAIN_PREFIX-as 
@@ -108,11 +108,13 @@ autoreconf -vif && \
   --with-libcares \
   --with-libz \
   --with-libssh2 \
-  CXXFLAGS="-Os -g  -std=c++14" \
-  CFLAGS="-Os -g" \
-  CPPFLAGS="-fPIE" \
-  LDFLAGS="-fPIE -pie -L$PREFIX/lib -static-libstdc++" \
+  ARIA2_STATIC=yes \
+  CXXFLAGS="-Os -g  -std=c++14 " \
+  CFLAGS="-Os -g " \
+  CPPFLAGS="-fPIE " \
+  LDFLAGS="-fPIE -pie -L$PREFIX/lib  -static-libstdc++ " \
   PKG_CONFIG_LIBDIR="$PREFIX/lib/pkgconfig" &&\
   make -j$(nproc) && \
-  $STRIP src/aria2c
-  mv src/aria2c $PREFIX/bin/
+  $STRIP src/aria2c && \
+  mv src/aria2c $PREFIX/bin/ &&\
+  echo "success."
